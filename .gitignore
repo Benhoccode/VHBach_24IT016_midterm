@@ -1,0 +1,3 @@
+*.o
+my_ls
+.DS_Store
