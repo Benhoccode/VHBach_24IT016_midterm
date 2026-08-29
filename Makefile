@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Iinclude
-SRC = src/main.c src/traverse.c
+SRC = src/main.c src/traverse.c src/sort.c
 OBJ = ${SRC:.c=.o}
 TARGET = my_ls
 
