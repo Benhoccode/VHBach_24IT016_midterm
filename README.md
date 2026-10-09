@@ -3,9 +3,13 @@
 ## Cài đặt và thực thi lệnh `ls(1)` đơn giản hóa
 
 **Họ và tên:** Võ Hoàng Bách
+
 **MSSV:** 24IT016
+
 **Môn học:** Lập trình hệ thống (Midterm Project)
+
 **Môi trường phát triển:** NetBSD 10.1 (x86_64)
+
 **Repository:** [GitHub Link](https://github.com/Benhoccode/VHBach_24IT016_midterm.git)
 
 ---
