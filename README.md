@@ -118,12 +118,21 @@ Ví dụ: `./my_ls -ln` sẽ hiển thị ID số (UID/GID) thay vì tên user/g
 
 ---
 
-## 2. Thực hiện demo chạy chương trình
+## 2. Thực hiện demo và kết quả thực nghiệm
 
-### 2.1 Biên dịch chương trình
+Phần này trình bày quá trình biên dịch, thực thi và kiểm tra các chức năng chính của chương trình `my_ls` trên môi trường NetBSD 10.1 (x86_64).
+
+### 2.1. Biên dịch chương trình
+
+**Lệnh thực hiện:**
+
+```bash
+make clean && make
+```
+
+**Kết quả thực nghiệm:**
 
 ```text
-$ make clean && make
 rm -f src/*.o my_ls
 cc -Wall -Wextra -Iinclude -c src/main.c -o src/main.o
 cc -Wall -Wextra -Iinclude -c src/parse.c -o src/parse.o
@@ -134,19 +143,33 @@ cc -Wall -Wextra -Iinclude -c src/util.c -o src/util.o
 cc -Wall -Wextra -Iinclude -o my_ls src/main.o src/parse.o src/print.o src/sort.o src/traverse.o src/util.o
 ```
 
-### 2.2 Demo các lệnh cơ bản
+### 2.2. Kiểm tra lệnh mặc định và định dạng chi tiết (`-l`)
 
-* Chạy lệnh mặc định `./my_ls` và định dạng dài `./my_ls -l`:
+**Trường hợp 1: Liệt kê nội dung thư mục hiện tại**
+
+```bash
+./my_ls
+```
+
+Kết quả:
 
 ```text
-$ ./my_ls
 Makefile
 README.md
 include
 my_ls
 src
+```
 
-$ ./my_ls -l
+**Trường hợp 2: Hiển thị thông tin chi tiết**
+
+```bash
+./my_ls -l
+```
+
+Kết quả:
+
+```text
 total 128
 -rw-r--r--  1 Ben  users    340 Oct  9 21:15 Makefile
 -rw-r--r--  1 Ben  users   4210 Oct  9 22:30 README.md
@@ -155,10 +178,17 @@ drwxr-xr-x  2 Ben  users    512 Oct  9 20:40 include
 drwxr-xr-x  2 Ben  users    512 Oct  9 21:50 src
 ```
 
-* Chạy lệnh xem chi tiết trên thư mục chỉ định `./my_ls -l ./include`:
+### 2.3. Kiểm tra khả năng liệt kê thư mục được chỉ định
+
+**Lệnh thực hiện:**
+
+```bash
+./my_ls -l ./include
+```
+
+Kết quả:
 
 ```text
-$ ./my_ls -l ./include
 total 24
 -rw-r--r--  1 Ben  users   1024 Oct  9 20:30 defs.h
 -rw-r--r--  1 Ben  users    180 Oct  9 20:31 parse.h
@@ -168,12 +198,17 @@ total 24
 -rw-r--r--  1 Ben  users    280 Oct  9 20:34 util.h
 ```
 
-### 2.3 Demo các cờ hiển thị và sắp xếp (`-a`, `-A`, `-t`, `-S`, `-r`, `-h`, `-i`, `-R`)
+### 2.4. Kiểm tra chức năng hiển thị file ẩn (`-a`, `-A`)
 
-* **Hiển thị file ẩn với `-a` và `-A`:**
+**Trường hợp 1: Sử dụng cờ `-a`**
+
+```bash
+./my_ls -a
+```
+
+Kết quả:
 
 ```text
-$ ./my_ls -a
 .
 ..
 .git
@@ -183,8 +218,17 @@ README.md
 include
 my_ls
 src
+```
 
-$ ./my_ls -A
+**Trường hợp 2: Sử dụng cờ `-A`**
+
+```bash
+./my_ls -A
+```
+
+Kết quả:
+
+```text
 .git
 .gitignore
 Makefile
@@ -194,18 +238,36 @@ my_ls
 src
 ```
 
-* **Hiển thị định dạng dung lượng dễ đọc (`-h`) và số inode (`-i`):**
+### 2.5. Kiểm tra định dạng dung lượng dễ đọc (`-h`)
+
+**Lệnh thực hiện:**
+
+```bash
+./my_ls -lh
+```
+
+Kết quả:
 
 ```text
-$ ./my_ls -lh
 total 128
 -rw-r--r--  1 Ben  users   340B Oct  9 21:15 Makefile
 -rw-r--r--  1 Ben  users   4.1K Oct  9 22:30 README.md
-drwxr-xr-x  2 Ben  users    512B Oct  9 20:40 include
+drwxr-xr-x  2 Ben  users   512B Oct  9 20:40 include
 -rwxr-xr-x  1 Ben  users    31K Oct  9 22:15 my_ls
-drwxr-xr-x  2 Ben  users    512B Oct  9 21:50 src
+drwxr-xr-x  2 Ben  users   512B Oct  9 21:50 src
+```
 
-$ ./my_ls -li
+### 2.6. Kiểm tra chức năng hiển thị số inode (`-i`)
+
+**Lệnh thực hiện:**
+
+```bash
+./my_ls -li
+```
+
+Kết quả:
+
+```text
 total 128
  81234 -rw-r--r--  1 Ben  users    340 Oct  9 21:15 Makefile
  81240 -rw-r--r--  1 Ben  users   4210 Oct  9 22:30 README.md
@@ -214,10 +276,17 @@ total 128
  80920 drwxr-xr-x  2 Ben  users    512 Oct  9 21:50 src
 ```
 
-* **Liệt kê đệ quy với `-R`:**
+### 2.7. Kiểm tra khả năng duyệt thư mục đệ quy (`-R`)
+
+**Lệnh thực hiện:**
+
+```bash
+./my_ls -R
+```
+
+Kết quả:
 
 ```text
-$ ./my_ls -R
 Makefile
 README.md
 include
@@ -246,3 +315,4 @@ traverse.o
 util.c
 util.o
 ```
+
